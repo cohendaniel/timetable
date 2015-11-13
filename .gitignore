@@ -1,0 +1,5 @@
+*.vcxproj
+*.csv
+ReadMe.txt
+stdafx.h
+Debug
