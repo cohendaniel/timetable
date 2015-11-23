@@ -5,3 +5,8 @@ ReadMe.txt
 stdafx.h
 targetver.h
 Debug
+ipch
+*.opensdf
+*.sdf
+*.sln
+*.suo

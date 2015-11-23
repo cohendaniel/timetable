@@ -1,0 +1,10 @@
+#bobobobo
+#RewriteEngine On
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule ^index.php [QSA,L]
+DirectoryIndex index.php
+#ErrorDocument 500 /index.php
+#ErrorDocument 404 /
+#ErrorDocument 403 errors/internalerror.html
+
+#Options -Indexes

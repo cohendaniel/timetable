@@ -1,0 +1,99 @@
+html,body {
+	height:100%;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+a:visited {
+	color: #e6b700
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+#background-color {
+	background-color: #d3d3d3;
+	margin-right: 15%;
+	margin-left: 15%;
+}
+
+#left-column-headers {
+	float: left;
+	width: 450px;
+	height: 200%;
+	padding-left: 30px;
+	background-color: #e6b700;
+	font-size: 30px;
+	color: black;
+	font-family: garamond;
+}
+
+#logo {
+	margin-right: 600px;
+	margin-left: 50px;
+	font-size: 30px;
+}
+
+#main-body {
+	float: right;
+	width: 800px;
+}
+
+#menu {
+	color: #e6b700;
+	background-color: black;
+	font-family: garamond;
+	font-size: 24px;
+	margin: 0px 0px 20px 0px;
+	height: 40px;
+	line-height: 40px;
+}
+
+#menu li{
+	display:inline;
+	
+}
+
+#report {
+	float: right;
+	width: inherit
+}
+
+.b {
+	font-weight: bold;
+}
+
+.big-break {
+	margin-top: 300px;
+}
+
+.clear {
+	clear: both;
+}
+
+.inputTable {
+	border: solid black;
+	background: rgba(230,183,0,0.6);
+}
+
+.link-space {
+	padding-right: 40px;
+}
+
+.no-margin {
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.section-header {
+	margin-top: 0px;
+	text-align: center;
+}
+
+.yellow-background {
+	background-color: #e6b700;
+}
