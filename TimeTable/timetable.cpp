@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
 
 	initConstants();
 	Graph graph(NUMNODES);
-	fillGraph(graph);
+	fillGraph(graph, argv[1], argv[2]);
 	makeSchedule(graph);
 	findMatches(graph);
 
@@ -42,9 +42,7 @@ void initConstants() {
 	NUMNODES = NUMDUPS + NUMITEMS + NUMBLOCKS + NUMSLOTS + 2;
 }
 
-void fillGraph(Graph &g) {
-	char* itemFile = "ITEM_TEST.csv";
-	char* blockFile = "BLOCK_TEST.csv";
+void fillGraph(Graph &g, char* blockFile, char* itemFile) {
 	readBlockFile(blockFile, g);
 	readItemFile(itemFile, g);
 }
@@ -93,21 +91,21 @@ void readBlockFile(char* blockFile, Graph &g) {
 
 void readItemFile(char* itemFile, Graph &g) {
 	std::fstream iFile(itemFile, std::fstream::in);
-
 	if (iFile.is_open()) {
 		std::string line;
 		while (getline(iFile, line)) {
-
 			std::stringstream ss(line);
 
-			std::string itemID, userID, name, numSlots, avail;
+			std::string itemID, userID, name, numSlots, avail, itemBlock, itemSlot;
 			
 			std::getline(ss, itemID, ',');
 			std::getline(ss, userID, ',');
 			std::getline(ss, name, ',');
 			std::getline(ss, numSlots, ',');
 			std::getline(ss, avail, ',');
-				
+			std::getline(ss, itemBlock, ',');
+			std::getline(ss, itemSlot, ',');
+
 			Item item(std::stoi(itemID), name, std::stoi(numSlots), avail);
 			g.addItem(item);
 		}
