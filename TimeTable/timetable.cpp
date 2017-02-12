@@ -23,9 +23,13 @@ int NUMDUPS, NUMITEMS, NUMBLOCKS, NUMSLOTS, NUMNODES, Node::nodeCounter;
 int main(int argc, char* argv[]) {
 	std::clock_t start = std::clock();
 
-	initConstants();
+	//char* file1 = "../web/includes/output/output_block.csv";
+	//char* file2 = "../web/includes/output/output_item.csv";
+
+	initConstants(std::atoi(argv[3]), std::atoi(argv[4]), std::atoi(argv[5]), std::atoi(argv[6]));
 	Graph graph(NUMNODES);
 	fillGraph(graph, argv[1], argv[2]);
+	//fillGraph(graph, file1, file2);
 	makeSchedule(graph);
 	findMatches(graph);
 
@@ -33,12 +37,12 @@ int main(int argc, char* argv[]) {
 	std::cout << "Time: " << duration << std::endl;
 }
 
-void initConstants() {
+void initConstants(int d, int i, int b, int s) {
 	Node::initNodeID();
-	NUMDUPS = 10;
-	NUMITEMS = 9;
-	NUMBLOCKS = 3;
-	NUMSLOTS = 10;
+	NUMDUPS = d;
+	NUMITEMS = i;
+	NUMBLOCKS = b;
+	NUMSLOTS = s;
 	NUMNODES = NUMDUPS + NUMITEMS + NUMBLOCKS + NUMSLOTS + 2;
 }
 
@@ -49,17 +53,41 @@ void fillGraph(Graph &g, char* blockFile, char* itemFile) {
 
 void findMatches(Graph &g) {
 	std::map<DupNode*, BlockNode*> schedule;
+	std::map<BlockNode*, std::vector<DupNode*>> printSchedule;
 	for (auto itemNode:g.itemNodes) {
-		for (int matchNum = 0; matchNum < itemNode->matches.size(); matchNum++) {
-			schedule[itemNode->dups[matchNum].get()] = itemNode->matches[matchNum].get();
+		if (itemNode->matches.size() > 0) {
+			for (int matchNum = 0; matchNum < itemNode->matches.size(); matchNum++) {
+				schedule[itemNode->dups[matchNum].get()] = itemNode->matches[matchNum].get();
+				printSchedule[itemNode->matches[matchNum].get()].push_back(itemNode->dups[matchNum].get()); 
+			}
+		}
+		else {
+			std::cout << itemNode->nItem.name << " has not been scheduled." << std::endl;
 		}
 	}
-	for (std::map<DupNode*, BlockNode*>::iterator it=schedule.begin(); it!=schedule.end(); ++it) {
+	for (auto blockNode:g.blockNodes) {
+		if (printSchedule.count(blockNode.get()) == 0) {
+			std::cout << blockNode->nBlock.name << " block has not been scheduled." << std::endl;
+		}
+	}
+	/*for (std::map<DupNode*, BlockNode*>::iterator it=schedule.begin(); it!=schedule.end(); ++it) {
 		if (it->second == NULL) {
 			std::cout << it->first->getItemNode()->nItem.name << " has not been scheduled." << std::endl;
 		}
 		else {
-			std::cout << it->first->getItemNode()->nItem.name << ": " << it->second->nBlock.name << std::endl;
+			//std::cout << it->first->getItemNode()->nItem.name << ": " << it->second->nBlock.name << std::endl;
+		}
+	}*/
+	for (std::map<BlockNode*, std::vector<DupNode*>>::iterator it=printSchedule.begin(); it!=printSchedule.end(); ++it) {
+		if (it->second.empty()) {
+			std::cout << it->first->nBlock.name << " block has not been scheduled." << std::endl;
+		}
+		else {
+			std::cout << it->first->nBlock.name << ",";
+			for (auto dup:it->second) {
+				std::cout << dup->getItemNode()->nItem.name << ",";
+			}
+			std::cout << "\n";
 		}
 	}
 }

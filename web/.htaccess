@@ -1,5 +1,4 @@
-#bobobobo
-#RewriteEngine On
+RewriteEngine On
 #RewriteCond %{REQUEST_FILENAME} !-f
 #RewriteRule ^index.php [QSA,L]
 DirectoryIndex index.php
@@ -8,3 +7,5 @@ DirectoryIndex index.php
 #ErrorDocument 403 errors/internalerror.html
 
 #Options -Indexes
+
+#RedirectMatch "^(.*)[\w]{32}$" "http://localhost/Timetable/web/survey.php"
